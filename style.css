@@ -1,0 +1,14 @@
+table, th, td {
+  border: 1px solid black;
+}
+
+hr {
+  width: 50%;
+}
+
+.header h1 {
+  font-family: 'VT323',
+  monospace;
+  font-size: 100px;
+  text-align: center;
+}
