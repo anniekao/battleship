@@ -7,31 +7,37 @@ const Ship = ({type, length}) => ({
 
   hits: 0,
 
-  setShipPositions(pos, orientation) {
+  setShipPosition(pos, orientation) {
+    const positions = [];
+
     switch (orientation) {
     case 'horizontal':
-      this.positions.push(pos);
       for (let i = 1; i < this.length; i++) {
-        this.positions.push([pos[0] + i, pos[1]]);
+        let x = pos[0] + i;
+        if (x > 9 || x < 0) {
+          return false;
+        } else {
+          positions.push([x , pos[1]]);
+        }
       }
+      this.positions = [pos,...positions];
       break;
     case 'vertical':
-      this.positions.push(pos);
       for (let i = 1; i < this.length; i++) {
-        this.positions.push([pos[0], pos[1] + i]);
+        let y = pos[1] + i;
+        if (y <= 9 && y >= 0) {
+          positions.push([pos[0], pos[1] + i]);
+        } else {
+          return "Does not compute";
+        }
       }
+      this.positions = [pos, ...positions];
       break;
     }
   },
 
-  hit(posX, posY) {
-    for (let pos of this.positions) {
-      if (pos[0] === posX && pos[1] === posY) {
-        this.hits++;
-        return 'Direct Hit!';
-      }
-    }
-    return 'Miss';
+  hit() {
+    this.hits++;
   },
 
   isSunk() {
@@ -52,7 +58,7 @@ const ships = {
 };
 
 // console.log(ships.carrier);
-// ships.carrier.setShipPositions([2,3], 'vertical');
+// ships.carrier.setShipPosition([2,3], 'vertical');
 // console.log(ships.carrier.hit(2,4));
 // console.log(ships.carrier.hits);
 // console.log(ships.carrier.isSunk());
